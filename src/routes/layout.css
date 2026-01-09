@@ -1,0 +1,256 @@
+@import 'tailwindcss';
+
+@theme {
+	--variant-dark: &:where(.dark, .dark *);
+
+	/* Custom color palette - Catppuccin Mocha inspired */
+	--color-base: #1e1e2e;
+	--color-surface: #313244;
+	--color-overlay: #45475a;
+	--color-text: #cdd6f4;
+	--color-subtext: #a6adc8;
+	--color-lavender: #b4befe;
+	--color-blue: #89b4fa;
+	--color-sapphire: #74c7ec;
+	--color-sky: #89dceb;
+	--color-teal: #94e2d5;
+	--color-green: #a6e3a1;
+	--color-yellow: #f9e2af;
+	--color-peach: #fab387;
+	--color-maroon: #eba0ac;
+	--color-red: #f38ba8;
+	--color-mauve: #cba6f7;
+	--color-pink: #f5c2e7;
+	--color-flamingo: #f2cdcd;
+	--color-rosewater: #f5e0dc;
+
+	/* Light mode palette - Catppuccin Latte inspired */
+	--color-light-base: #eff1f5;
+	--color-light-surface: #e6e9ef;
+	--color-light-overlay: #dce0e8;
+	--color-light-text: #4c4f69;
+	--color-light-subtext: #6c6f85;
+	--color-light-lavender: #7287fd;
+	--color-light-blue: #1e66f5;
+	--color-light-sapphire: #209fb5;
+	--color-light-teal: #179299;
+	--color-light-green: #40a02b;
+	--color-light-mauve: #8839ef;
+	--color-light-pink: #ea76cb;
+
+	/* Typography */
+	--font-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+	--font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+	--font-heading: 'Cal Sans', 'Geist', var(--font-sans);
+}
+
+/* Base styles */
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-light-base text-light-text antialiased;
+	@apply dark:bg-base dark:text-text;
+	font-family: var(--font-sans);
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-heading);
+	@apply font-bold tracking-tight;
+}
+
+/* Links */
+a:not([class*='bg-'], [class*='border-']) {
+	@apply text-light-blue transition-colors duration-200;
+	@apply dark:text-lavender;
+	@apply hover:text-light-mauve dark:hover:text-pink;
+}
+
+/* Code blocks */
+pre {
+	@apply my-6 overflow-x-auto rounded-xl p-4;
+	font-family: var(--font-mono);
+	font-size: 0.875rem;
+	line-height: 1.6;
+}
+
+/* Inline code */
+:not(pre) > code {
+	@apply rounded-md bg-light-overlay px-1.5 py-0.5 text-sm;
+	@apply dark:bg-surface;
+	font-family: var(--font-mono);
+}
+
+/* Selection */
+::selection {
+	@apply bg-light-lavender/30 text-light-text;
+}
+
+.dark ::selection {
+	@apply bg-lavender/30 text-text;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	@apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+	@apply bg-light-surface dark:bg-surface rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply bg-light-overlay dark:bg-overlay rounded-full;
+	@apply hover:bg-light-subtext dark:hover:bg-subtext;
+}
+
+/* Prose styling for blog content */
+.prose {
+	@apply max-w-none;
+}
+
+.prose h1 {
+	@apply mb-6 mt-12 text-4xl font-bold;
+	@apply text-light-text dark:text-text;
+}
+
+.prose h2 {
+	@apply mb-4 mt-10 text-2xl font-semibold;
+	@apply text-light-text dark:text-text;
+	@apply border-b border-light-overlay pb-2 dark:border-overlay;
+}
+
+.prose h3 {
+	@apply mb-3 mt-8 text-xl font-medium;
+	@apply text-light-text dark:text-text;
+}
+
+.prose p {
+	@apply mb-4 leading-relaxed;
+	@apply text-light-subtext dark:text-subtext;
+}
+
+.prose ul,
+.prose ol {
+	@apply mb-4 ml-6 space-y-2;
+}
+
+.prose ul {
+	@apply list-disc;
+}
+
+.prose ol {
+	@apply list-decimal;
+}
+
+.prose li {
+	@apply text-light-subtext dark:text-subtext;
+}
+
+.prose blockquote {
+	@apply my-6 border-l-4 border-light-lavender pl-4 italic;
+	@apply dark:border-lavender;
+	@apply text-light-subtext dark:text-subtext;
+}
+
+.prose strong {
+	@apply font-semibold text-light-text dark:text-text;
+}
+
+.prose img {
+	@apply my-6 rounded-xl shadow-lg;
+}
+
+.prose hr {
+	@apply my-8 border-light-overlay dark:border-overlay;
+}
+
+/* Shiki code block themes */
+.shiki {
+	@apply rounded-xl border border-light-overlay dark:border-overlay;
+	background-color: var(--color-light-surface) !important;
+}
+
+.dark .shiki {
+	background-color: var(--color-surface) !important;
+}
+
+.shiki span {
+	color: var(--shiki-light);
+}
+
+.dark .shiki span {
+	color: var(--shiki-dark);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+	@apply outline-2 outline-offset-2 outline-light-lavender;
+	@apply dark:outline-lavender;
+}
+
+/* Skip to content link */
+.skip-link {
+	@apply absolute left-4 top-4 z-50 -translate-y-16 rounded-lg bg-light-surface px-4 py-2 text-sm font-medium;
+	@apply dark:bg-surface;
+	@apply focus:translate-y-0 focus:outline-none;
+	transition: transform 0.2s ease;
+}
+
+/* Animations */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+	animation: slide-up 0.5s ease-out forwards;
+}
+
+/* Staggered animation delays */
+.stagger-1 {
+	animation-delay: 0.1s;
+}
+.stagger-2 {
+	animation-delay: 0.2s;
+}
+.stagger-3 {
+	animation-delay: 0.3s;
+}
+.stagger-4 {
+	animation-delay: 0.4s;
+}
+.stagger-5 {
+	animation-delay: 0.5s;
+}
